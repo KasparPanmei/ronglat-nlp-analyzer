@@ -1,14 +1,13 @@
-"""Upload the runtime assets to a PRIVATE Vercel Blob store.
 
-Run locally after setting BLOB_READ_WRITE_TOKEN:
-    python scripts/upload_private_assets.py
-"""
-from pathlib import Path
+"""Upload Ronglat runtime assets to a private Vercel Blob store."""
+
 import os
+from pathlib import Path
 
-from vercel.blob import BlobClient
+from vercel.blob import sync as blob
 
 ROOT = Path(__file__).resolve().parents[1]
+
 ASSETS = (
     "models/pos_char_bilstm_crf.pt",
     "models/ner_char_bilstm_crf.pt",
@@ -20,25 +19,29 @@ ASSETS = (
 
 def main():
     if not os.getenv("BLOB_READ_WRITE_TOKEN"):
-        raise SystemExit("Set BLOB_READ_WRITE_TOKEN before uploading.")
+        raise SystemExit(
+            "ERROR: BLOB_READ_WRITE_TOKEN is not set. "
+            "Configure it before uploading."
+        )
 
-    client = BlobClient()
     for relative_name in ASSETS:
         source = ROOT / relative_name
+
         if not source.is_file():
-            raise SystemExit(f"Required local asset is missing: {source}")
+            raise SystemExit(f"Missing required asset: {source}")
 
-        with source.open("rb") as file_handle:
-            result = client.put(
-                relative_name,
-                file_handle.read(),
-                access="private",
-                add_random_suffix=False,
-                overwrite=True,
-            )
-        print(f"Uploaded {relative_name} -> {result.pathname}")
+        print(f"Uploading: {relative_name}")
 
-    print("\nPrivate runtime assets uploaded successfully.")
+        uploaded = blob.put_blob(
+            relative_name,
+            source.read_bytes(),
+            access="private",
+            allow_overwrite=True,
+        )
+
+        print(f"Uploaded successfully: {uploaded.pathname}")
+
+    print("\nAll five private assets uploaded successfully.")
 
 
 if __name__ == "__main__":
