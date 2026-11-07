@@ -1,15 +1,12 @@
-"""Upload the five runtime assets to a PRIVATE Vercel Blob store.
+"""Upload the runtime assets to a PRIVATE Vercel Blob store.
 
 Run locally after setting BLOB_READ_WRITE_TOKEN:
     python scripts/upload_private_assets.py
-
-The files are uploaded with stable pathnames expected by webapp/runtime_assets.py.
 """
 from pathlib import Path
 import os
-import sys
 
-from vercel.blob import sync as blob
+from vercel.blob import BlobClient
 
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = (
@@ -22,24 +19,22 @@ ASSETS = (
 
 
 def main():
-    if not (os.getenv("BLOB_READ_WRITE_TOKEN") or os.getenv("BLOB_STORE_ID")):
-        raise SystemExit(
-            "Set BLOB_READ_WRITE_TOKEN (or configure local Vercel Blob OIDC credentials) first."
-        )
+    if not os.getenv("BLOB_READ_WRITE_TOKEN"):
+        raise SystemExit("Set BLOB_READ_WRITE_TOKEN before uploading.")
 
+    client = BlobClient()
     for relative_name in ASSETS:
         source = ROOT / relative_name
         if not source.is_file():
             raise SystemExit(f"Required local asset is missing: {source}")
 
         with source.open("rb") as file_handle:
-            result = blob.put_blob(
+            result = client.put(
                 relative_name,
-                file_handle,
+                file_handle.read(),
                 access="private",
                 add_random_suffix=False,
-                allow_overwrite=True,
-                content_length=source.stat().st_size,
+                overwrite=True,
             )
         print(f"Uploaded {relative_name} -> {result.pathname}")
 
