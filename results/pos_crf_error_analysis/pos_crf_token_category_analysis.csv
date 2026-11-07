@@ -1,8 +1,0 @@
-﻿token_category,total,correct,incorrect,accuracy
-lowercase,1750,1469,281,0.8394285714285714
-mixed_alphanumeric,8,8,0,1.0
-mixed_case,6,5,1,0.8333333333333334
-numeric,16,16,0,1.0
-punctuation,8,7,1,0.875
-title_case,448,424,24,0.9464285714285714
-uppercase,73,73,0,1.0

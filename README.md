@@ -1,56 +1,48 @@
-# Ronglat NLP Analyzer — HTML/CSS frontend with Python backend
+# Ronglat NLP Analyzer
 
-This version separates the interface from the NLP processing:
+HTML/CSS/JavaScript frontend with a Python Flask backend for Ronglat POS tagging, NER and corpus vocabulary exploration.
 
-- HTML: `webapp/templates/index.html`
-- CSS: `webapp/static/css/style.css`
-- Browser interactions: `webapp/static/js/app.js`
-- Python / Flask API and model inference: `webapp/server.py`
-- Existing `inference.py`, trained model files, and corpus remain in your project.
+## Local development
 
-## Expected project layout
+Keep the private runtime assets on your computer in this layout:
 
 ```text
-YourProject/
-├── data/
-│   └── Phase_2B8_Final_Corpus.csv
-├── models/                       # keep your existing model files here
-├── webapp/
-│   ├── inference.py              # keep your existing inference.py here
-│   ├── server.py                 # included in this package
-│   ├── templates/
-│   │   └── index.html
-│   └── static/
-│       ├── css/
-│       │   └── style.css
-│       └── js/
-│           └── app.js
-└── requirements-web.txt
+models/
+  pos_char_bilstm_crf.pt
+  ner_char_bilstm_crf.pt
+results/
+  pos_char_bilstm_crf_results.json
+  ner_char_bilstm_crf_results.json
+data/
+  Phase_2B8_Final_Corpus.csv
 ```
 
-If your current `inference.py` is in a different directory, keep it where it is and adjust the import in `server.py` or move `server.py` alongside it.
-
-## Setup
-
-From your project root in PowerShell:
+Install dependencies and run:
 
 ```powershell
-# Activate your existing virtual environment
+python -m venv .venv
 .venv\Scripts\Activate.ps1
-
-# Install the web server dependencies
-pip install -r requirements-web.txt
-
-# Start the app
-python webapp/server.py
+pip install -r requirements.txt
+python server.py
 ```
 
-Open `http://127.0.0.1:5000` in your browser.
+Open http://127.0.0.1:5000.
+
+## Vercel deployment
+
+1. Import this GitHub repository into Vercel. Use the repository root as the Root Directory.
+2. Vercel detects the Flask WSGI application exported by the root-level `server.py`.
+3. Create a **Private** Vercel Blob store in the Vercel project and connect it to this project for Production (and Preview if needed).
+4. On your local computer, set `BLOB_READ_WRITE_TOKEN` to the store's read/write token. Do not commit this token.
+5. Install the requirements locally and run `python scripts/upload_private_assets.py`. This uploads only the two Character-BiLSTM-CRF checkpoints, their two evaluation JSON files and the corpus CSV.
+6. Redeploy. The Flask application downloads missing assets from the private Blob store into Vercel's temporary `/tmp` storage on first use.
+
+The runtime uses the private Blob SDK with `access="private"`. The Blob store must be connected to the Vercel project so the Python SDK can authenticate with the project's Vercel credentials.
 
 ## Important
 
-1. Keep your trained model checkpoints and configuration files unchanged.
-2. Put `Phase_2B8_Final_Corpus.csv` in either the project root or `data/`.
-3. This uses the same `Predictor(ROOT)` interface and expects `predictor.analyze(text)` to return rows containing `token`, `pos`, `ner`, and `known_word`.
-4. The displayed English items are corpus-derived word glosses, not fluent sentence translations.
-5. The Flask debug server is for local development only. Do not expose it directly to the public internet.
+- Do not commit `models/`, `data/`, `results/`, model checkpoints, corpus files, or environment secrets.
+- The repository's current branch excludes private data files. Removing them from the current branch does not erase earlier Git history. If this repository was public, consider making it private and cleaning Git history if you need to revoke access to previously committed assets.
+- Vercel Functions have a 500 MB standard uncompressed bundle limit. PyTorch may require Vercel Large Functions support depending on the final dependency bundle size.
+- Vercel Functions have a read-only application filesystem. Runtime assets are cached only in temporary `/tmp` storage and may need to be downloaded again after a cold start.
+- English glosses are corpus-derived token lookups, not fluent sentence translations.

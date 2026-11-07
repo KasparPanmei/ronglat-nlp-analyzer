@@ -1,1 +1,33 @@
+# Python environments and cache
 .venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Private corpus, processed data, models and experiment outputs
+/data/
+/models/
+/results/
+*.pt
+*.pth
+*.ckpt
+*.pkl
+*.pickle
+*.joblib
+*.h5
+*.keras
+*.onnx
+*.jsonl
+
+# Editor and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
