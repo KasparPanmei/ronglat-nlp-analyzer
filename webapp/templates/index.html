@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#f4f6f8">
     <title>Ronglat NLP Analyzer</title>
-    <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
-    <link rel="stylesheet" href="css/style.css">
+
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
@@ -64,6 +64,12 @@
         </aside>
 
         <main class="main-content">
+            {% if model_error %}
+            <div class="alert error-alert" role="status" style="margin: 18px 0;">
+                {{ model_error }}
+            </div>
+            {% endif %}
+            
             <header class="topbar">
                 <div class="breadcrumb">Research tools <span>/</span> Ronglat language processing</div>
                 <div class="prototype-label"><span></span> Research prototype</div>
@@ -375,7 +381,7 @@
             </footer>
         </main>
     </div>
-    <script src="js/app.js"></script>
+    <script src="/js/app.js"></script>
 </body>
 
 </html>

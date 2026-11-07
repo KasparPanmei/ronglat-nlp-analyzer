@@ -1,7 +1,6 @@
 import csv
 import io
 from pathlib import Path
-from webapp.server import app
 
 import pandas as pd
 from flask import (
@@ -13,9 +12,10 @@ from flask import (
 )
 
 from .inference import Predictor
+from .runtime_assets import get_asset_root
 
 ROOT = Path(__file__).resolve().parents[1]
-app = Flask(__name__)
+app = Flask(__name__, template_folder="templates", static_folder=None)
 
 _predictor = None
 _dictionary = None
@@ -26,7 +26,7 @@ _vocabulary_stats = None
 def get_predictor():
     global _predictor
     if _predictor is None:
-        _predictor = Predictor(ROOT)
+        _predictor = Predictor(get_asset_root(ROOT))
     return _predictor
 
 
@@ -38,9 +38,10 @@ def get_dictionary():
         return _dictionary
 
     filename = "Phase_2B8_Final_Corpus.csv"
+    asset_root = get_asset_root(ROOT)
     candidates = [
-        ROOT / "data" / filename,
-        ROOT / filename,
+        asset_root / "data" / filename,
+        asset_root / filename,
     ]
     corpus_path = next((p for p in candidates if p.is_file()), None)
 
@@ -85,10 +86,15 @@ def get_vocabulary_data():
 
     filename = "Phase_2B8_Final_Corpus.csv"
 
+    try:
+        asset_root = get_asset_root(ROOT)
+    except RuntimeError:
+        asset_root = ROOT
+
     candidates = [
-        ROOT / "data" / filename,
-        ROOT / filename,
-        ROOT / "data" / "raw" / filename
+        asset_root / "data" / filename,
+        asset_root / filename,
+        asset_root / "data" / "raw" / filename
     ]
 
     corpus_path = next(
@@ -118,9 +124,8 @@ def get_vocabulary_data():
 
         corpus_rows = len(df)
 
-        df = df.dropna(
-            subset=["token", "gloss"]
-        ).copy()
+        # Count every non-empty token, including rows without a gloss.
+        df = df.dropna(subset=["token"]).copy()
 
         df["token"] = (
             df["token"]
@@ -130,6 +135,7 @@ def get_vocabulary_data():
 
         df["gloss"] = (
             df["gloss"]
+            .fillna("")
             .astype(str)
             .str.strip()
         )
@@ -251,28 +257,44 @@ def extract_entities(rows):
 
 @app.get("/")
 def index():
-    predictor = get_predictor()
-
-    dictionary = get_dictionary()
-
-    vocabulary_rows, vocabulary_stats = (
-        get_vocabulary_data()
-    )
-    
-    return render_template(
-        "index.html",
-        metrics={
+    model_error = None
+    try:
+        predictor = get_predictor()
+        dictionary = get_dictionary()
+        _, vocabulary_stats = get_vocabulary_data()
+        metrics = {
             "pos_accuracy": round(predictor.pm["accuracy"] * 100, 2),
             "pos_macro_f1": round(predictor.pm["macro_f1"] * 100, 2),
             "ner_entity_f1": round(predictor.nm["entity_f1"] * 100, 2),
-            "ner_token_accuracy": round(
-                predictor.nm["token_accuracy"] * 100, 2
-            ),
-        },
+            "ner_token_accuracy": round(predictor.nm["token_accuracy"] * 100, 2),
+        }
+    except Exception:
+        app.logger.exception("NLP assets are not ready")
+        dictionary = {}
+        vocabulary_stats = {
+            "corpus_rows": 0,
+            "unique_entries": 0,
+            "entries_with_gloss": 0,
+        }
+        metrics = {
+            "pos_accuracy": 0,
+            "pos_macro_f1": 0,
+            "ner_entity_f1": 0,
+            "ner_token_accuracy": 0,
+        }
+        model_error = (
+            "The private NLP assets are not connected yet. "
+            "Connect the private Vercel Blob store and upload the five runtime files."
+        )
+
+    return render_template(
+        "index.html",
+        metrics=metrics,
         dictionary_count=len(dictionary),
         dictionary_available=bool(dictionary),
         dictionary_source=_dictionary_source,
         vocabulary_stats=vocabulary_stats,
+        model_error=model_error,
     )
 
 
@@ -322,9 +344,12 @@ def analyze():
             },
         })
 
+    except RuntimeError as exc:
+        app.logger.exception("Private NLP assets are unavailable")
+        return jsonify({"error": "NLP models are not configured. Connect the private Vercel Blob store and upload the runtime assets."}), 503
     except Exception as exc:
         app.logger.exception("Analysis failed")
-        return jsonify({"error": f"Analysis failed: {exc}"}), 500
+        return jsonify({"error": "Analysis failed. Check the Vercel runtime logs."}), 500
 
 @app.get("/api/vocabulary")
 def vocabulary():
@@ -465,7 +490,10 @@ def export_vocabulary():
 
 @app.get("/api/health")
 def health():
-    return jsonify({"status": "ok"})
+    return jsonify({
+        "status": "ok",
+        "models_loaded": _predictor is not None,
+    })
 
 
 if __name__ == "__main__":
