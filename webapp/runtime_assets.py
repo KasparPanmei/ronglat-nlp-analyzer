@@ -1,6 +1,7 @@
 """Load private NLP model and corpus assets from Vercel Blob when deployed."""
 from __future__ import annotations
 
+import asyncio
 import os
 import tempfile
 from pathlib import Path
@@ -12,6 +13,20 @@ REQUIRED_ASSETS = (
     "results/ner_char_bilstm_crf_results.json",
     "data/Phase_2B8_Final_Corpus.csv",
 )
+
+
+async def _download_private_blob(pathname: str) -> bytes:
+    from vercel.blob import AsyncBlobClient
+
+    client = AsyncBlobClient()
+    result = await client.get(pathname, access="private")
+    if result is None or result.status_code != 200 or result.stream is None:
+        raise FileNotFoundError(f"Private Blob asset not found: {pathname}")
+
+    chunks = []
+    async for chunk in result.stream:
+        chunks.append(chunk)
+    return b"".join(chunks)
 
 
 def get_asset_root(project_root: Path | str) -> Path:
@@ -31,48 +46,38 @@ def get_asset_root(project_root: Path | str) -> Path:
     if not missing:
         return root
 
-    # On a local machine, do not attempt remote downloads: show the missing paths.
     if not os.getenv("VERCEL") and not configured_root:
-        missing_text = ", ".join(missing)
-        raise RuntimeError(f"Missing local NLP assets: {missing_text}")
-
-    if not (os.getenv("BLOB_STORE_ID") or os.getenv("BLOB_READ_WRITE_TOKEN")):
         raise RuntimeError(
-            "Private Vercel Blob storage is not connected. Set up a private Blob "
-            "store and connect it to this Vercel project."
+            "Missing local NLP assets: " + ", ".join(missing)
         )
 
-    try:
-        from vercel.blob import sync as blob
-    except ImportError as exc:
+    if not os.getenv("BLOB_READ_WRITE_TOKEN") and not os.getenv("VERCEL_OIDC_TOKEN") and not os.getenv("VERCEL"):
         raise RuntimeError(
-            "The vercel-blob package is missing. Add it to requirements.txt."
-        ) from exc
+            "Set BLOB_READ_WRITE_TOKEN or connect the private Blob store to Vercel."
+        )
 
     for relative_name in missing:
         destination = root / relative_name
         destination.parent.mkdir(parents=True, exist_ok=True)
 
         try:
-            downloaded = blob.get_blob(relative_name, access="private")
-            payload = downloaded.body
+            payload = asyncio.run(_download_private_blob(relative_name))
         except Exception as exc:
             raise RuntimeError(
                 f"Could not download private asset '{relative_name}' from Vercel Blob. "
-                "Check that the file exists and that the Blob store is connected."
+                "Check the private Blob store, pathname and project connection."
             ) from exc
 
-        # Write atomically so concurrent function requests do not see partial files.
-        temp_name = None
+        temporary_name = None
         try:
             with tempfile.NamedTemporaryFile(
                 mode="wb", dir=destination.parent, delete=False
             ) as temporary:
                 temporary.write(payload)
-                temp_name = temporary.name
-            os.replace(temp_name, destination)
+                temporary_name = temporary.name
+            os.replace(temporary_name, destination)
         finally:
-            if temp_name and os.path.exists(temp_name):
-                os.unlink(temp_name)
+            if temporary_name and os.path.exists(temporary_name):
+                os.unlink(temporary_name)
 
     return root
