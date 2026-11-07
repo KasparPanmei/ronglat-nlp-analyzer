@@ -1,7 +1,6 @@
 import csv
 import io
 from pathlib import Path
-from webapp.server import app
 
 import pandas as pd
 from flask import (
@@ -12,7 +11,7 @@ from flask import (
     request
 )
 
-from .inference import Predictor
+from inference import Predictor
 
 ROOT = Path(__file__).resolve().parents[1]
 app = Flask(__name__)
