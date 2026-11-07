@@ -1,0 +1,59 @@
+POS CHARACTER-BILSTM-CRF
+
+DATASET INFORMATION
+Train sentences: 446
+Original DEV sentences: 90
+Evaluated DEV sentences: 89
+Excluded DEV sentences: 1
+Test sentences: 80
+Unseen DEV labels: ['EX']
+Unseen TEST labels: []
+
+DEV CLASSIFICATION REPORT
+              precision    recall  f1-score   support
+
+         ADJ       0.66      0.55      0.60        93
+         ADP       0.88      0.90      0.89       356
+         ADV       0.80      0.64      0.71       107
+         AUX       0.71      0.71      0.71        58
+       CCONJ       0.85      0.87      0.86        52
+         DET       0.88      0.95      0.91       127
+        INTJ       0.00      0.00      0.00         1
+        NOUN       0.78      0.81      0.80       416
+         NUM       0.88      0.78      0.82        45
+        PART       0.75      0.66      0.70        86
+        PRON       0.62      0.80      0.69       113
+       PROPN       0.97      0.95      0.96       526
+       PUNCT       0.00      0.00      0.00         0
+         SYM       0.00      0.00      0.00         0
+        VERB       0.86      0.85      0.85       618
+           X       0.00      0.00      0.00         1
+
+    accuracy                           0.84      2599
+   macro avg       0.60      0.59      0.59      2599
+weighted avg       0.84      0.84      0.84      2599
+
+
+TEST CLASSIFICATION REPORT
+              precision    recall  f1-score   support
+
+         ADJ       0.56      0.58      0.57       109
+         ADP       0.86      0.91      0.89       303
+         ADV       0.68      0.61      0.64        80
+         AUX       0.82      0.85      0.84        39
+       CCONJ       0.85      0.89      0.87        57
+         DET       0.88      0.92      0.90        96
+        INTJ       0.00      0.00      0.00         0
+        NOUN       0.83      0.84      0.84       438
+         NUM       0.82      0.59      0.69        39
+        PART       0.91      0.72      0.80        82
+        PRON       0.64      0.91      0.75        75
+       PROPN       0.96      0.95      0.96       482
+       PUNCT       0.00      0.00      0.00         0
+         SYM       0.00      0.00      0.00         1
+        VERB       0.87      0.84      0.86       508
+           X       0.00      0.00      0.00         0
+
+    accuracy                           0.85      2309
+   macro avg       0.61      0.60      0.60      2309
+weighted avg       0.85      0.85      0.85      2309

@@ -1,0 +1,177 @@
+﻿sentence_index,article_id,entity_type,start,end,text
+0,2,DATE,0,2,Aseih kwm
+0,2,EVENT,2,5,Manipur’s Sangai Festival
+0,2,DATE,5,6,2025
+1,2,EVENT,0,1,Sangai
+1,2,ORG,1,4,Festival state govt
+1,2,CARDINAL,9,10,30
+1,2,DATE,10,11,November
+2,2,DATE,0,2,Aseih kwm
+2,2,ORG,17,19,India Today
+2,2,PER,20,21,Nov
+2,2,ORG,21,22,30
+2,2,ORG,22,23,Coordinating
+2,2,ORG,23,28,Committee on Manipur Integrity (COCOMI)
+3,2,DATE,2,3,9
+3,2,CARDINAL,7,8,8000
+3,2,CARDINAL,8,9,9000
+4,2,DATE,0,2,Aseih kwm
+4,2,ORG,18,19,Society
+5,2,DATE,2,3,2025
+5,2,ORG,7,8,IDPs
+6,2,ORG,0,2,Security forces
+8,6,DATE,0,1,Aseih
+8,6,LOC,8,10,Manipur Goods
+8,6,LAW,15,16,"Bill,"
+9,6,ORG,0,2,Union Finance
+9,6,TITLE,2,3,Minister
+9,6,PER,7,8,GST
+9,6,PER,34,36,Krishna Prasad
+9,6,PER,37,40,Telugu Desam Party
+10,6,DATE,2,6,"February 13, 2025 khou"
+10,6,CARDINAL,22,23,GST
+11,9,ORG,1,2,Association
+11,9,LOC,2,3,Tamenglong
+11,9,ORG,4,5,Noney
+11,9,ORG,6,7,Advent
+11,9,EVENT,7,8,Christmas
+11,9,DATE,10,12,December 2025
+11,9,ORG,13,14,ZEF
+11,9,FAC,14,16,"Gospel Hall,"
+11,9,LOC,16,17,Tamenglong
+11,9,ORG,17,18,HQ
+12,9,EVENT,1,2,Christmas
+12,9,PER,5,9,"Dichamng Pamei, Retd. DC,"
+13,9,PER,6,9,"Dr. Namsadai Kamei,"
+13,9,TITLE,9,10,"Pastor,"
+16,11,DATE,7,11,December 2025 lungc khou
+16,11,ORG,17,18,govt
+17,11,ORG,6,8,State-level Committee
+17,11,TITLE,9,11,Chief Secretary
+17,11,ORG,23,24,Development
+17,11,TITLE,29,30,Secretary
+18,11,TITLE,4,6,Deputy Commissioners
+18,11,TITLE,13,14,Director
+18,11,PER,14,15,"(DRDA),"
+18,11,TITLE,15,18,Additional Deputy Commissioner
+18,11,PER,19,22,"Convenor, Zilla Parishad"
+19,28,PER,13,14,Yumnam
+19,28,LOC,14,18,"Khemchand, Litan Sareikhong, Ukhrul"
+22,28,PER,6,7,Grihang
+22,28,LOC,13,14,Litan
+22,28,PER,14,15,Sareikhong
+26,36,LOC,10,11,Tamenglong
+28,37,LOC,2,3,Kangpokpi
+28,37,NORP,5,6,Kuki
+28,37,ORG,6,7,"CSOs,"
+28,37,NORP,7,8,Kuki
+28,37,ORG,8,9,Inpi
+28,37,DATE,14,16,nthuan (12
+28,37,PER,16,17,December)
+28,37,LOC,23,24,Senapati
+30,40,CARDINAL,12,13,15th
+30,40,ORG,13,15,Finance Commission
+30,40,CARDINAL,17,18,2021–22
+34,40,LOC,3,4,Governor
+35,40,ORG,1,2,Commission
+36,54,ORDINAL,0,1,18th
+36,54,CARDINAL,12,13,(16th
+36,54,PER,19,22,Mahur Road Zero
+36,54,CARDINAL,27,28,Zero
+37,54,CARDINAL,14,15,(35
+37,54,CARDINAL,19,20,36
+39,54,ORDINAL,2,3,18th
+39,54,PER,17,19,52-Tamei AC
+39,54,PER,32,33,Stadium
+39,54,PER,38,40,53-Tamenglong AC
+39,54,TITLE,41,43,chief guest
+40,54,EVENT,6,7,Program
+40,54,DATE,9,12,17th December 10:30:00
+41,54,TITLE,11,13,chief guest
+41,54,TITLE,24,25,guest
+42,54,NORP,5,6,Christmas
+42,54,PER,6,7,"Choral,"
+42,54,PER,14,16,Tamenglong’s Got
+42,54,PER,17,19,"Semi Final,"
+43,59,LOC,0,1,Longmai
+43,59,ORG,3,6,Noney District Headquarters
+43,59,PER,9,11,Fire Sub-Station
+43,59,PER,12,13,"Gangmei,"
+43,59,PER,13,16,"Chairman, Hill Areas"
+43,59,ORG,16,17,Committee
+43,59,PER,18,20,"MLA, 54-Nungba"
+43,59,ORG,20,22,Assembly Constituency
+44,59,PER,8,12,"L. Nabachandra Singh, Director,"
+44,59,TITLE,12,14,Fire Service
+44,59,PER,15,19,"Namsadai Peter Pamei, Superintendent"
+44,59,ORG,20,21,"Police,"
+44,59,ORG,21,23,Noney District
+45,59,ORG,10,12,Fire Service
+45,59,PER,14,17,Fire Sub Station
+46,59,ORG,1,4,Fire Sub Station
+49,62,DATE,0,2,Aseih 18th
+49,62,EVENT,4,6,orange festival
+50,62,LAW,0,1,One
+50,62,PER,4,6,“Tamenglong Orange
+50,62,PER,8,10,From Local
+50,62,PER,12,14,Global Arena
+52,62,LAW,0,1,One
+52,62,PER,5,8,"Janghemlung Panmei, MLA,"
+52,62,PER,10,11,AC
+52,62,EVENT,25,26,Function
+52,62,TITLE,26,27,President
+52,62,PER,28,33,"Prof. NG Iboyaima Singh, Dean,"
+52,62,ORG,33,34,College
+52,62,ORG,35,36,Forestry
+52,62,PER,37,39,"Tree Sciences,"
+52,62,PER,40,42,Agricultural University
+52,62,ORG,42,43,"(CAU),"
+53,62,PER,5,8,"Roshan Dangmei, DO"
+54,62,TITLE,6,7,Director
+54,62,ORG,11,13,Integrated Development
+54,62,ORG,14,15,Horticulture)
+54,62,PER,16,17,GI
+54,62,ORG,19,20,Orange
+55,62,ORG,2,3,Director
+57,62,TITLE,0,2,Deputy Commissioner
+57,62,TITLE,2,3,Dr.
+57,62,PER,3,4,L.
+57,62,PER,4,7,"Angshim Dangshawa, IAS"
+59,62,PER,7,8,Nagpur
+60,62,PER,0,1,Kapaeng
+61,62,PER,0,1,Kapaeng
+61,62,LOC,8,10,Tamenglong Orange
+65,62,CARDINAL,14,15,UV
+66,62,CARDINAL,2,3,padeih
+69,62,PER,11,12,"Beekeeping,"
+69,62,LOC,12,13,Manipur
+69,62,PER,13,14,Beekeeping
+70,78,PER,10,12,"Lui-Ngai Ni,"
+70,78,ORG,12,15,United Naga Council
+70,78,DATE,18,20,February 14
+70,78,CARDINAL,21,22,15
+70,78,EVENT,23,24,Ukhrul
+71,78,PER,6,10,Tangkhul Naga Long (TNL)
+76,78,PER,14,16,Hill Areas
+76,78,ORG,16,17,Committee
+76,78,PER,17,18,(HAC)
+77,78,PER,5,7,Kumar Goel
+77,78,CARDINAL,12,13,kanei
+78,78,CARDINAL,5,6,Chandel
+78,78,PER,8,10,S. S.
+78,78,PER,12,13,Phungyar
+78,78,CARDINAL,16,17,kanei
+80,87,LOC,4,5,Manipur
+80,87,PER,5,6,(DESAM)
+80,87,ORG,22,26,Board of Secondary Education
+80,87,LOC,26,27,Manipur
+80,87,PER,28,29,Babupara
+81,87,LOC,6,7,Manipur
+84,92,NORP,0,1,Kuki
+84,92,ORG,3,4,Council
+85,92,ORG,1,2,Kuki-Zomei
+86,92,NORP,0,1,Kuki
+86,92,ORG,3,5,Council (KHRC)
+88,92,LOC,7,8,Union
+90,92,DATE,6,9,"December 30, 2025"
+91,92,PER,1,2,Lungthu

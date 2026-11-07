@@ -1,0 +1,29 @@
+﻿sentence_index,article_id,gold_type,predicted_type,start,end,text
+0,2,CARDINAL,DATE,5,6,2025
+0,2,LOC,ORG,2,3,Manipur’s
+3,2,CARDINAL,DATE,7,9,8000 9000
+5,2,CARDINAL,DATE,2,3,2025
+10,6,PER,ORG,41,42,Sitharaman
+11,9,LOC,ORG,4,5,Noney
+11,9,ORG,DATE,8,9,aseih
+30,40,ORDINAL,DATE,12,13,15th
+31,40,PER,LOC,0,1,Muivah
+36,54,QUANTITY,DATE,17,18,12km
+36,54,FAC,LOC,19,21,Mahur Road
+36,54,DATE,ORDINAL,0,1,18th
+39,54,DATE,ORDINAL,2,3,18th
+39,54,EVENT,ORG,44,45,Christmas
+39,54,LOC,PER,17,18,52-Tamei
+40,54,EVENT,FAC,5,7,Inaugural Program
+42,54,DATE,LOC,0,1,Nthuan
+44,59,TITLE,FAC,11,12,"Director,"
+44,59,FAC,ORG,0,3,Noney Fire Sub-Station
+45,59,FAC,ORG,0,2,Fire Sub-Station
+45,59,TITLE,ORG,6,7,MLA
+46,59,FAC,ORG,1,4,Fire Sub Station
+53,62,TITLE,PER,4,5,Dr.
+59,62,LOC,NORP,7,8,Nagpur
+76,78,TITLE,ORG,24,25,MLA
+78,78,LOC,NORP,5,6,Chandel
+78,78,LOC,ORG,12,13,Phungyar
+91,92,LOC,PER,1,2,Lungthu

@@ -1,0 +1,187 @@
+{
+  "experiment": "NER Logistic Regression Error Analysis",
+  "test_sentences": 94,
+  "overall_entity_metrics": {
+    "gold_entities": 370,
+    "predicted_entities": 396,
+    "correct_entities": 192,
+    "precision": 0.48484848484848486,
+    "recall": 0.518918918918919,
+    "f1": 0.5013054830287206
+  },
+  "per_entity_type": [
+    {
+      "entity_type": "CARDINAL",
+      "gold": 17,
+      "predicted": 10,
+      "correct": 8,
+      "precision": 0.8,
+      "recall": 0.47058823529411764,
+      "f1": 0.5925925925925927
+    },
+    {
+      "entity_type": "DATE",
+      "gold": 23,
+      "predicted": 31,
+      "correct": 4,
+      "precision": 0.12903225806451613,
+      "recall": 0.17391304347826086,
+      "f1": 0.14814814814814814
+    },
+    {
+      "entity_type": "EVENT",
+      "gold": 35,
+      "predicted": 21,
+      "correct": 8,
+      "precision": 0.38095238095238093,
+      "recall": 0.22857142857142856,
+      "f1": 0.2857142857142857
+    },
+    {
+      "entity_type": "FAC",
+      "gold": 8,
+      "predicted": 8,
+      "correct": 1,
+      "precision": 0.125,
+      "recall": 0.125,
+      "f1": 0.125
+    },
+    {
+      "entity_type": "LAW",
+      "gold": 5,
+      "predicted": 4,
+      "correct": 1,
+      "precision": 0.25,
+      "recall": 0.2,
+      "f1": 0.22222222222222224
+    },
+    {
+      "entity_type": "LOC",
+      "gold": 65,
+      "predicted": 66,
+      "correct": 41,
+      "precision": 0.6212121212121212,
+      "recall": 0.6307692307692307,
+      "f1": 0.6259541984732825
+    },
+    {
+      "entity_type": "NORP",
+      "gold": 24,
+      "predicted": 27,
+      "correct": 22,
+      "precision": 0.8148148148148148,
+      "recall": 0.9166666666666666,
+      "f1": 0.8627450980392156
+    },
+    {
+      "entity_type": "ORDINAL",
+      "gold": 3,
+      "predicted": 4,
+      "correct": 1,
+      "precision": 0.25,
+      "recall": 0.3333333333333333,
+      "f1": 0.28571428571428575
+    },
+    {
+      "entity_type": "ORG",
+      "gold": 97,
+      "predicted": 130,
+      "correct": 47,
+      "precision": 0.36153846153846153,
+      "recall": 0.4845360824742268,
+      "f1": 0.41409691629955947
+    },
+    {
+      "entity_type": "PER",
+      "gold": 43,
+      "predicted": 53,
+      "correct": 33,
+      "precision": 0.6226415094339622,
+      "recall": 0.7674418604651163,
+      "f1": 0.6875
+    },
+    {
+      "entity_type": "QUANTITY",
+      "gold": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    {
+      "entity_type": "TIME",
+      "gold": 4,
+      "predicted": 0,
+      "correct": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    {
+      "entity_type": "TITLE",
+      "gold": 45,
+      "predicted": 42,
+      "correct": 26,
+      "precision": 0.6190476190476191,
+      "recall": 0.5777777777777777,
+      "f1": 0.5977011494252873
+    }
+  ],
+  "entity_length_analysis": {
+    "single-token": {
+      "gold": 224,
+      "predicted": 265,
+      "correct": 136,
+      "precision": 0.5132075471698113,
+      "recall": 0.6071428571428571,
+      "f1": 0.5562372188139059
+    },
+    "multi-token": {
+      "gold": 146,
+      "predicted": 131,
+      "correct": 56,
+      "precision": 0.42748091603053434,
+      "recall": 0.3835616438356164,
+      "f1": 0.40433212996389883
+    }
+  },
+  "error_counts": {
+    "missed_entities": 178,
+    "spurious_entities": 204,
+    "type_errors": 28,
+    "boundary_errors": 80,
+    "token_errors": 340
+  },
+  "sentence_analysis": {
+    "total_sentences": 94,
+    "sentences_with_errors": 70,
+    "sentences_without_errors": 24
+  },
+  "oov_analysis": [
+    {
+      "token_category": "known",
+      "total_tokens": 2291,
+      "correct": 2100,
+      "incorrect": 191,
+      "accuracy": 0.9166302924487123
+    },
+    {
+      "token_category": "OOV",
+      "total_tokens": 431,
+      "correct": 282,
+      "incorrect": 149,
+      "accuracy": 0.654292343387471
+    }
+  ],
+  "files": {
+    "per_entity_type": "C:\\Users\\Administrator\\Desktop\\Ronglat NLP\\LowResource_NLP_with_model_training_notebook\\LowResource_NLP\\results\\ner_logreg_error_analysis\\ner_logreg_per_entity_type.csv",
+    "missed_entities": "C:\\Users\\Administrator\\Desktop\\Ronglat NLP\\LowResource_NLP_with_model_training_notebook\\LowResource_NLP\\results\\ner_logreg_error_analysis\\ner_logreg_missed_entities.csv",
+    "spurious_entities": "C:\\Users\\Administrator\\Desktop\\Ronglat NLP\\LowResource_NLP_with_model_training_notebook\\LowResource_NLP\\results\\ner_logreg_error_analysis\\ner_logreg_spurious_entities.csv",
+    "type_errors": "C:\\Users\\Administrator\\Desktop\\Ronglat NLP\\LowResource_NLP_with_model_training_notebook\\LowResource_NLP\\results\\ner_logreg_error_analysis\\ner_logreg_entity_type_errors.csv",
+    "boundary_errors": "C:\\Users\\Administrator\\Desktop\\Ronglat NLP\\LowResource_NLP_with_model_training_notebook\\LowResource_NLP\\results\\ner_logreg_error_analysis\\ner_logreg_boundary_errors.csv",
+    "sentence_errors": "C:\\Users\\Administrator\\Desktop\\Ronglat NLP\\LowResource_NLP_with_model_training_notebook\\LowResource_NLP\\results\\ner_logreg_error_analysis\\ner_logreg_sentence_errors.csv",
+    "bio_confusion": "C:\\Users\\Administrator\\Desktop\\Ronglat NLP\\LowResource_NLP_with_model_training_notebook\\LowResource_NLP\\results\\ner_logreg_error_analysis\\ner_logreg_bio_confusion.csv",
+    "token_errors": "C:\\Users\\Administrator\\Desktop\\Ronglat NLP\\LowResource_NLP_with_model_training_notebook\\LowResource_NLP\\results\\ner_logreg_error_analysis\\ner_logreg_token_errors.csv"
+  }
+}

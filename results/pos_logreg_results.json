@@ -1,0 +1,40 @@
+{
+    "experiment": "POS Logistic Regression",
+    "random_state": 42,
+    "C": 1.0,
+    "data": {
+        "train_tokens": 13354,
+        "dev_tokens": 2619,
+        "test_tokens": 2309,
+        "train_sentences": 446,
+        "dev_sentences": 90,
+        "test_sentences": 80,
+        "num_pos_classes": 16
+    },
+    "majority_baseline": {
+        "dev": {
+            "majority_label": "VERB",
+            "accuracy": 0.23864070255822833,
+            "macro_f1": 0.02568845047266749,
+            "weighted_f1": 0.09195464802644435
+        },
+        "test": {
+            "majority_label": "VERB",
+            "accuracy": 0.22000866175833694,
+            "macro_f1": 0.027743644357062888,
+            "weighted_f1": 0.07934994687485636
+        }
+    },
+    "logistic_regression": {
+        "dev": {
+            "accuracy": 0.8610156548300878,
+            "macro_f1": 0.5744604821297115,
+            "weighted_f1": 0.8601805804932438
+        },
+        "test": {
+            "accuracy": 0.8648765699436985,
+            "macro_f1": 0.5864194640071263,
+            "weighted_f1": 0.863832737318929
+        }
+    }
+}

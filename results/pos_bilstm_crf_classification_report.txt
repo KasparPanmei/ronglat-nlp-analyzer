@@ -1,0 +1,62 @@
+RONGLAT LOW-RESOURCE NLP
+POS TAGGING - BiLSTM-CRF
+======================================================================
+
+DATASET INFORMATION
+----------------------------------------------------------------------
+Train sentences: 446
+Original dev sentences: 90
+Evaluated dev sentences: 89
+Test sentences: 80
+Excluded dev sentences: 1
+
+MODEL INFORMATION
+----------------------------------------------------------------------
+Vocabulary size: 2599
+POS classes: 16
+Embedding dimension: 128
+Hidden dimension: 128
+Dropout: 0.2
+Batch size: 16
+Learning rate: 0.001
+Weight decay: 1e-05
+Best epoch: 23
+
+DEV RESULTS
+----------------------------------------------------------------------
+Accuracy: 0.7953
+Macro-F1: 0.6340
+Weighted-F1: 0.7939
+
+TEST RESULTS
+----------------------------------------------------------------------
+Accuracy: 0.7878
+Macro-F1: 0.6840
+Weighted-F1: 0.7846
+
+TEST CLASSIFICATION REPORT
+----------------------------------------------------------------------
+              precision    recall  f1-score   support
+
+         ADJ     0.6364    0.4495    0.5269       109
+         ADP     0.8774    0.8977    0.8874       303
+         ADV     0.7015    0.5875    0.6395        80
+         AUX     0.8519    0.5897    0.6970        39
+       CCONJ     0.8333    0.8772    0.8547        57
+         DET     0.9175    0.9271    0.9223        96
+        NOUN     0.7011    0.7283    0.7144       438
+         NUM     0.5357    0.3846    0.4478        39
+        PART     0.8571    0.7317    0.7895        82
+        PRON     0.6634    0.8933    0.7614        75
+       PROPN     0.7608    0.8776    0.8150       482
+         SYM     0.0000    0.0000    0.0000         1
+        VERB     0.8785    0.7972    0.8359       508
+
+    accuracy                         0.7878      2309
+   macro avg     0.7088    0.6724    0.6840      2309
+weighted avg     0.7887    0.7878    0.7846      2309
+
+
+EXPERIMENT NOTE
+----------------------------------------------------------------------
+One dev sentence from Article 30 contains the POS label EX, which is absent from the training set. That sentence was excluded from DEV evaluation only. No test sentences were excluded and no training annotations were changed.

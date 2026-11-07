@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f4f6f8">
+    <title>Ronglat NLP Analyzer</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <a class="brand" href="/">
+                <span class="brand-mark">R</span>
+                <span>
+                    <strong>Ronglat NLP</strong>
+                    <small>Research workspace</small>
+                </span>
+            </a>
+
+            <div class="sidebar-section">
+
+                <p class="sidebar-label">WORKSPACE</p>
+
+                <a class="nav-link active" href="#analysis">
+                    <span class="nav-icon">▤</span>
+                    Text analysis
+                </a>
+
+                <a class="nav-link" href="#evaluation">
+                    <span class="nav-icon">▥</span>
+                    Model evaluation
+                </a>
+
+                <a class="nav-link" href="#vocabulary">
+                    <span class="nav-icon">Aa</span>
+                    Vocabulary explorer
+                </a>
+
+            </div>
+
+            <div class="sidebar-bottom">
+                <p class="sidebar-label">MODEL CONFIGURATION</p>
+                <div class="model-item">
+                    <span class="status-dot"></span>
+                    <div><strong>POS tagger</strong><small>Character-BiLSTM-CRF</small></div>
+                </div>
+                <div class="model-item">
+                    <span class="status-dot"></span>
+                    <div><strong>NER tagger</strong><small>Character-BiLSTM-CRF</small></div>
+                </div>
+                <div class="dictionary-status">
+                    <span class="status-dot {% if not dictionary_available %}status-dot-muted{% endif %}"></span>
+                    <span>
+                        <strong>Corpus gloss lookup</strong>
+                        <small>{% if dictionary_available %}{{ "{:,}".format(dictionary_count) }} token entries{% else
+                            %}Corpus file not detected{% endif %}</small>
+                    </span>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <div class="breadcrumb">Research tools <span>/</span> Ronglat language processing</div>
+                <div class="prototype-label"><span></span> Research prototype</div>
+            </header>
+
+            <section class="page-heading">
+                <div>
+                    <p class="eyebrow">LOW-RESOURCE LANGUAGE RESEARCH</p>
+                    <h1>Ronglat NLP Analyzer</h1>
+                    <p class="intro">Explore token-level linguistic predictions using trained POS and Named Entity
+                        Recognition models, with English glosses retrieved from the annotated corpus.</p>
+                </div>
+            </section>
+
+            <section id="evaluation" class="evaluation-section">
+                <div class="section-heading">
+                    <div>
+                        <h2>Model evaluation</h2>
+                        <p>Performance on the held-out test set</p>
+                    </div>
+                    <span class="info-label">TEST METRICS</span>
+                </div>
+                <div class="metric-grid">
+                    <article class="metric-card">
+                        <div class="metric-top"><span>POS accuracy</span><span class="metric-symbol">01</span></div>
+                        <strong>{{ "%.2f"|format(metrics.pos_accuracy) }}%</strong>
+                        <small>Token classification accuracy</small>
+                    </article>
+                    <article class="metric-card">
+                        <div class="metric-top"><span>POS macro-F1</span><span class="metric-symbol">02</span></div>
+                        <strong>{{ "%.2f"|format(metrics.pos_macro_f1) }}%</strong>
+                        <small>Unweighted class-level F1</small>
+                    </article>
+                    <article class="metric-card">
+                        <div class="metric-top"><span>NER entity-level F1</span><span class="metric-symbol">03</span>
+                        </div>
+                        <strong>{{ "%.2f"|format(metrics.ner_entity_f1) }}%</strong>
+                        <small>Entity-level evaluation</small>
+                    </article>
+                    <article class="metric-card">
+                        <div class="metric-top"><span>NER token accuracy</span><span class="metric-symbol">04</span>
+                        </div>
+                        <strong>{{ "%.2f"|format(metrics.ner_token_accuracy) }}%</strong>
+                        <small>Token-level classification</small>
+                    </article>
+                </div>
+                <p class="fine-print">These are held-out test-set results. They are not confidence scores or accuracy
+                    estimates for an individual submitted sentence.</p>
+            </section>
+
+            <section id="analysis" class="workspace-section">
+                <div class="section-heading">
+                    <div>
+                        <h2>Text analysis</h2>
+                        <p>Enter Ronglat text to generate POS and NER predictions.</p>
+                    </div>
+                </div>
+                <div class="input-panel">
+                    <label for="ronglat-input">Ronglat input</label>
+                    <textarea id="ronglat-input"
+                        placeholder="Type or paste a Ronglat word, phrase, or sentence..."></textarea>
+                    <div class="input-footer">
+                        <span>Sentence-level input is recommended because predictions use context.</span>
+                        <button id="analyze-button" class="primary-button" type="button">
+                            <span>Analyse text</span><span aria-hidden="true">→</span>
+                        </button>
+                    </div>
+                </div>
+                <div id="error-message" class="alert error-alert" role="alert" hidden></div>
+                <div id="loading-message" class="loading-state" hidden><span class="spinner"></span> Running the trained
+                    models...</div>
+            </section>
+
+            <section id="results-section" class="results-section" hidden>
+                <div class="section-heading results-heading">
+                    <div>
+                        <h2>Analysis results</h2>
+                        <p>Predictions for the submitted text</p>
+                    </div>
+                    <span class="result-state"><span></span> Analysis complete</span>
+                </div>
+
+                <div class="summary-grid">
+                    <div class="summary-card"><small>Tokens analysed</small><strong id="summary-tokens">0</strong></div>
+                    <div class="summary-card"><small>Known vocabulary</small><strong id="summary-known">0</strong></div>
+                    <div class="summary-card"><small>Unseen vocabulary</small><strong id="summary-unseen">0</strong>
+                    </div>
+                    <div class="summary-card"><small>Entities identified</small><strong id="summary-entities">0</strong>
+                    </div>
+                    <div class="summary-card"><small>Tokens with gloss</small><strong id="summary-glossed">0</strong>
+                    </div>
+                </div>
+
+                <div class="results-panel">
+                    <div class="tab-bar" role="tablist">
+                        <button class="tab-button active" data-tab="tagging" role="tab">Tagging results</button>
+                        <button class="tab-button" data-tab="entities" role="tab">Named entities</button>
+                        <button class="tab-button" data-tab="glosses" role="tab">English glosses</button>
+                        <button class="tab-button" data-tab="distribution" role="tab">POS distribution</button>
+                    </div>
+
+                    <div id="tab-tagging" class="tab-content active" role="tabpanel">
+                        <div class="table-wrap">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Ronglat token</th>
+                                        <th>English gloss</th>
+                                        <th>POS tag</th>
+                                        <th>NER tag</th>
+                                        <th>Vocabulary</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tagging-body"></tbody>
+                            </table>
+                        </div>
+                        <p class="table-note">English glosses are corpus lookups, not generated sentence translations.
+                        </p>
+                    </div>
+
+                    <div id="tab-entities" class="tab-content" role="tabpanel">
+                        <div id="entities-list" class="entity-list"></div>
+                    </div>
+
+                    <div id="tab-glosses" class="tab-content" role="tabpanel">
+                        <div id="glosses-list" class="gloss-list"></div>
+                    </div>
+
+                    <div id="tab-distribution" class="tab-content" role="tabpanel">
+                        <div id="distribution-list" class="distribution-list"></div>
+                    </div>
+                </div>
+            </section>
+            <section id="vocabulary" class="vocabulary-section">
+
+                <div class="section-heading">
+
+                    <div>
+                        <h2>Vocabulary explorer</h2>
+
+                        <p>
+                            Search unique Ronglat token entries
+                            and their corpus-derived English glosses.
+                        </p>
+                    </div>
+                </div>
+
+
+                <!-- Vocabulary statistics -->
+
+                <div class="vocab-overview">
+
+                    <article class="vocab-stat">
+
+                        <small>Unique lexical entries</small>
+
+                        <strong id="vocab-unique">
+                            {{ "{:,}".format(vocabulary_stats.unique_entries) }}
+                        </strong>
+
+                    </article>
+
+
+                    <article class="vocab-stat">
+
+                        <small>Corpus rows read</small>
+
+                        <strong id="vocab-rows">
+                            {{ "{:,}".format(vocabulary_stats.corpus_rows) }}
+                        </strong>
+
+                    </article>
+
+
+                    <article class="vocab-stat">
+
+                        <small>Entries with gloss</small>
+
+                        <strong id="vocab-glossed">
+                            {{ "{:,}".format(vocabulary_stats.entries_with_gloss) }}
+                        </strong>
+
+                    </article>
+
+                </div>
+
+
+                <!-- Vocabulary table -->
+
+                <div class="vocab-panel">
+
+                    <div class="vocab-toolbar">
+
+                        <div class="search-field">
+
+                            <span>⌕</span>
+
+                            <input type="search" id="vocab-search"
+                                placeholder="Search Ronglat word or English meaning..." autocomplete="off">
+
+                        </div>
+
+
+                        <label class="page-size-control">
+
+                            Show
+
+                            <select id="vocab-page-size">
+
+                                <option value="10">10</option>
+
+                                <option value="25" selected>25</option>
+
+                                <option value="50">50</option>
+
+                                <option value="100">100</option>
+
+                            </select>
+
+                            entries
+
+                        </label>
+
+                    </div>
+
+
+                    <div class="table-wrap">
+
+                        <table class="vocab-table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>Ronglat token</th>
+
+                                    <th>English gloss</th>
+
+                                    <th>Corpus frequency</th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody id="vocabulary-body">
+
+                                <tr>
+                                    <td colspan="3" class="vocab-placeholder">
+                                        Loading vocabulary...
+                                    </td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+
+                    <!-- Pagination -->
+
+                    <div class="vocab-pagination">
+
+                        <span id="vocab-count" class="table-note">
+                            Loading entries...
+                        </span>
+
+
+                        <div class="pagination-actions">
+
+                            <button id="vocab-prev" class="pagination-button" type="button" disabled>
+                                Previous
+                            </button>
+
+
+                            <span id="vocab-page-label">
+                                Page 1 of 1
+                            </span>
+
+
+                            <button id="vocab-next" class="pagination-button" type="button" disabled>
+                                Next
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <p class="fine-print">
+
+                    Frequency counts the number of non-empty corpus rows
+                    containing each token. Repeated tokens are grouped into
+                    one lexical entry. These are corpus-derived glosses,
+                    not independently verified dictionary definitions.
+
+                </p>
+
+
+                <div id="vocab-error" class="alert error-alert" role="alert" hidden></div>
+
+            </section>
+            <footer class="page-footer">
+                <span>Ronglat NLP Analyzer</span>
+                <span>Character-BiLSTM-CRF · POS tagging · Named Entity Recognition</span>
+            </footer>
+        </main>
+    </div>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+
+</html>

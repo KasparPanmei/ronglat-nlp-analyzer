@@ -1,0 +1,29 @@
+﻿sentence_index,article_id,gold_type,predicted_type,gold_start,gold_end,predicted_start,predicted_end,text
+0,2,CARDINAL,DATE,5,6,5,6,2025
+3,2,CARDINAL,DATE,2,3,2,3,9
+5,2,CARDINAL,DATE,2,3,2,3,2025
+11,9,LOC,ORG,4,5,4,5,Noney
+17,11,ORG,TITLE,29,30,29,30,Secretary
+18,11,ORG,TITLE,4,6,4,6,Deputy Commissioners
+18,11,ORG,PER,14,15,14,15,"(DRDA),"
+22,28,LOC,PER,6,7,6,7,Grihang
+30,40,ORDINAL,CARDINAL,12,13,12,13,15th
+34,40,TITLE,LOC,3,4,3,4,Governor
+36,54,DATE,ORDINAL,0,1,0,1,18th
+39,54,DATE,ORDINAL,2,3,2,3,18th
+43,59,FAC,PER,9,11,9,11,Fire Sub-Station
+44,59,ORG,TITLE,12,14,12,14,Fire Service
+45,59,FAC,PER,14,17,14,17,Fire Sub Station
+46,59,FAC,ORG,1,4,1,4,Fire Sub Station
+50,62,CARDINAL,LAW,0,1,0,1,One
+52,62,ORG,PER,10,11,10,11,AC
+52,62,CARDINAL,LAW,0,1,0,1,One
+59,62,LOC,PER,7,8,7,8,Nagpur
+70,78,LOC,EVENT,23,24,23,24,Ukhrul
+70,78,EVENT,PER,10,12,10,12,"Lui-Ngai Ni,"
+71,78,ORG,PER,6,10,6,10,Tangkhul Naga Long (TNL)
+78,78,LOC,CARDINAL,5,6,5,6,Chandel
+78,78,LOC,PER,12,13,12,13,Phungyar
+80,87,LOC,PER,28,29,28,29,Babupara
+85,92,NORP,ORG,1,2,1,2,Kuki-Zomei
+91,92,LOC,PER,1,2,1,2,Lungthu

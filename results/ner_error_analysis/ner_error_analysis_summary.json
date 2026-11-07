@@ -1,0 +1,171 @@
+{
+  "experiment": "NER Character-BiLSTM-CRF Error Analysis",
+  "test_sentences": 94,
+  "best_epoch": 13,
+  "best_dev_entity_f1": 0.4809160305343511,
+  "overall_entity_metrics": {
+    "gold_entities": 370,
+    "predicted_entities": 334,
+    "correct_entities": 158,
+    "precision": 0.47305389221556887,
+    "recall": 0.42702702702702705,
+    "f1": 0.44886363636363635
+  },
+  "per_entity_type": [
+    {
+      "entity_type": "CARDINAL",
+      "gold": 17,
+      "predicted": 23,
+      "correct": 7,
+      "precision": 0.30434782608695654,
+      "recall": 0.4117647058823529,
+      "f1": 0.35
+    },
+    {
+      "entity_type": "DATE",
+      "gold": 23,
+      "predicted": 20,
+      "correct": 4,
+      "precision": 0.2,
+      "recall": 0.17391304347826086,
+      "f1": 0.18604651162790697
+    },
+    {
+      "entity_type": "EVENT",
+      "gold": 35,
+      "predicted": 17,
+      "correct": 9,
+      "precision": 0.5294117647058824,
+      "recall": 0.2571428571428571,
+      "f1": 0.34615384615384615
+    },
+    {
+      "entity_type": "FAC",
+      "gold": 8,
+      "predicted": 1,
+      "correct": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    {
+      "entity_type": "LAW",
+      "gold": 5,
+      "predicted": 3,
+      "correct": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    {
+      "entity_type": "LOC",
+      "gold": 65,
+      "predicted": 51,
+      "correct": 35,
+      "precision": 0.6862745098039216,
+      "recall": 0.5384615384615384,
+      "f1": 0.6034482758620688
+    },
+    {
+      "entity_type": "NORP",
+      "gold": 24,
+      "predicted": 26,
+      "correct": 21,
+      "precision": 0.8076923076923077,
+      "recall": 0.875,
+      "f1": 0.8400000000000001
+    },
+    {
+      "entity_type": "ORDINAL",
+      "gold": 3,
+      "predicted": 2,
+      "correct": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    {
+      "entity_type": "ORG",
+      "gold": 97,
+      "predicted": 77,
+      "correct": 36,
+      "precision": 0.4675324675324675,
+      "recall": 0.3711340206185567,
+      "f1": 0.41379310344827586
+    },
+    {
+      "entity_type": "PER",
+      "gold": 43,
+      "predicted": 79,
+      "correct": 26,
+      "precision": 0.3291139240506329,
+      "recall": 0.6046511627906976,
+      "f1": 0.4262295081967213
+    },
+    {
+      "entity_type": "QUANTITY",
+      "gold": 1,
+      "predicted": 0,
+      "correct": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    {
+      "entity_type": "TIME",
+      "gold": 4,
+      "predicted": 0,
+      "correct": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    {
+      "entity_type": "TITLE",
+      "gold": 45,
+      "predicted": 35,
+      "correct": 20,
+      "precision": 0.5714285714285714,
+      "recall": 0.4444444444444444,
+      "f1": 0.5
+    }
+  ],
+  "entity_length_analysis": {
+    "single-token": {
+      "gold": 224,
+      "predicted": 221,
+      "correct": 115,
+      "precision": 0.5203619909502263,
+      "recall": 0.5133928571428571,
+      "f1": 0.5168539325842697
+    },
+    "multi-token": {
+      "gold": 146,
+      "predicted": 113,
+      "correct": 43,
+      "precision": 0.3805309734513274,
+      "recall": 0.2945205479452055,
+      "f1": 0.33204633204633205
+    }
+  },
+  "error_counts": {
+    "missed_entities": 212,
+    "spurious_entities": 176,
+    "entity_type_errors": 28,
+    "boundary_errors": 69
+  },
+  "sentence_analysis": {
+    "sentences_with_errors": 76,
+    "sentences_without_errors": 18,
+    "total_sentences": 94
+  },
+  "files": {
+    "per_entity_type": "C:\\Users\\Administrator\\Desktop\\Ronglat NLP\\LowResource_NLP_with_model_training_notebook\\LowResource_NLP\\results\\ner_error_analysis\\ner_per_entity_type.csv",
+    "missed_entities": "C:\\Users\\Administrator\\Desktop\\Ronglat NLP\\LowResource_NLP_with_model_training_notebook\\LowResource_NLP\\results\\ner_error_analysis\\ner_missed_entities.csv",
+    "spurious_entities": "C:\\Users\\Administrator\\Desktop\\Ronglat NLP\\LowResource_NLP_with_model_training_notebook\\LowResource_NLP\\results\\ner_error_analysis\\ner_spurious_entities.csv",
+    "entity_type_errors": "C:\\Users\\Administrator\\Desktop\\Ronglat NLP\\LowResource_NLP_with_model_training_notebook\\LowResource_NLP\\results\\ner_error_analysis\\ner_entity_type_errors.csv",
+    "boundary_errors": "C:\\Users\\Administrator\\Desktop\\Ronglat NLP\\LowResource_NLP_with_model_training_notebook\\LowResource_NLP\\results\\ner_error_analysis\\ner_boundary_errors.csv",
+    "sentence_errors": "C:\\Users\\Administrator\\Desktop\\Ronglat NLP\\LowResource_NLP_with_model_training_notebook\\LowResource_NLP\\results\\ner_error_analysis\\ner_sentence_errors.csv",
+    "bio_confusion": "C:\\Users\\Administrator\\Desktop\\Ronglat NLP\\LowResource_NLP_with_model_training_notebook\\LowResource_NLP\\results\\ner_error_analysis\\ner_bio_confusion.csv"
+  }
+}
