@@ -504,24 +504,21 @@ def export_vocabulary():
 
 @app.get("/api/health")
 def health():
-    """Report asset readiness without forcing expensive model initialization."""
-    try:
-        asset_root = get_asset_root(ROOT)
-    except Exception:
-        app.logger.exception("Health check could not resolve NLP assets")
-        return jsonify({
-            "status": "degraded",
-            "models_loaded": _predictor is not None,
-            "assets_available": False,
-        }), 503
-
+    """Lightweight liveness check; does not download assets or load models."""
     return jsonify({
         "status": "ok",
         "models_loaded": _predictor is not None,
-        "assets_available": True,
     })
 
 
+@app.get("/api/ready")
+def readiness():
+    """Readiness check for instances that have initialized both NLP models."""
+    ready = _predictor is not None
+    return jsonify({
+        "status": "ready" if ready else "not_ready",
+        "models_loaded": ready,
+    }), 200 if ready else 503
 
 
 if __name__ == "__main__":
