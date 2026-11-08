@@ -211,6 +211,47 @@
                         <h2>Vocabulary explorer</h2>
                     </div>
                 </div>
+
+
+                <!-- Vocabulary statistics -->
+
+                <div class="vocab-overview">
+
+                    <article class="vocab-stat">
+
+                        <small>Unique lexical entries</small>
+
+                        <strong id="vocab-unique">
+                            {{ "{:,}".format(vocabulary_stats.unique_entries) }}
+                        </strong>
+
+                    </article>
+
+
+                    <article class="vocab-stat">
+
+                        <small>Corpus rows read</small>
+
+                        <strong id="vocab-rows">
+                            {{ "{:,}".format(vocabulary_stats.corpus_rows) }}
+                        </strong>
+
+                    </article>
+
+
+                    <article class="vocab-stat">
+
+                        <small>Entries with gloss</small>
+
+                        <strong id="vocab-glossed">
+                            {{ "{:,}".format(vocabulary_stats.entries_with_gloss) }}
+                        </strong>
+
+                    </article>
+
+                </div>
+
+
                 <div id="vocab-error" class="alert error-alert" role="alert" hidden></div>
 
             </section>
