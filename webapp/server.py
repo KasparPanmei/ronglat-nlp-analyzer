@@ -8,7 +8,8 @@ from flask import (
     Response,
     jsonify,
     render_template,
-    request
+    request,
+    send_from_directory
 )
 
 from .inference import Predictor
@@ -255,6 +256,19 @@ def extract_entities(rows):
     return entities
 
 
+
+@app.get("/css/<path:filename>")
+def serve_css(filename):
+    """Serve styles from the shared static directory."""
+    return send_from_directory(ROOT / "webapp" / "static" / "css", filename)
+
+
+@app.get("/js/<path:filename>")
+def serve_javascript(filename):
+    """Serve JavaScript from the shared static directory."""
+    return send_from_directory(ROOT / "webapp" / "static" / "js", filename)
+
+
 @app.get("/")
 def index():
     model_error = None
@@ -490,10 +504,24 @@ def export_vocabulary():
 
 @app.get("/api/health")
 def health():
+    """Report asset readiness without forcing expensive model initialization."""
+    try:
+        asset_root = get_asset_root(ROOT)
+    except Exception:
+        app.logger.exception("Health check could not resolve NLP assets")
+        return jsonify({
+            "status": "degraded",
+            "models_loaded": _predictor is not None,
+            "assets_available": False,
+        }), 503
+
     return jsonify({
         "status": "ok",
         "models_loaded": _predictor is not None,
+        "assets_available": True,
     })
+
+
 
 
 if __name__ == "__main__":
