@@ -252,6 +252,44 @@
                 </div>
 
 
+                <div class="vocabulary-tools">
+                    <label for="vocab-search">Search tokens or English glosses</label>
+                    <div class="vocabulary-toolbar">
+                        <input id="vocab-search" type="search" placeholder="Search vocabulary..." autocomplete="off">
+                        <select id="vocab-page-size" aria-label="Entries per page">
+                            <option value="10">10 per page</option>
+                            <option value="25" selected>25 per page</option>
+                            <option value="50">50 per page</option>
+                            <option value="100">100 per page</option>
+                        </select>
+                        <a class="primary-button" href="/api/vocabulary/export">Export CSV</a>
+                    </div>
+                </div>
+
+                <div class="table-wrap vocabulary-table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Ronglat token</th>
+                                <th>English gloss</th>
+                                <th>Corpus frequency</th>
+                            </tr>
+                        </thead>
+                        <tbody id="vocabulary-body">
+                            <tr><td colspan="3" class="vocab-placeholder">Loading vocabulary...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="vocabulary-pagination">
+                    <span id="vocab-count">Loading entries...</span>
+                    <div>
+                        <button id="vocab-prev" type="button" disabled>Previous</button>
+                        <span id="vocab-page-label">Page 1 of 1</span>
+                        <button id="vocab-next" type="button" disabled>Next</button>
+                    </div>
+                </div>
+
                 <div id="vocab-error" class="alert error-alert" role="alert" hidden></div>
 
             </section>
